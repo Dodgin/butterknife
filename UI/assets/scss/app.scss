@@ -1,0 +1,12 @@
+// IMPORTS ONLY
+
+// Variable Overrides
+@import "UI/assets/scss/overrides";
+
+// Base Theme Imports
+@import "node_modules/bootswatch/dist/flatly/_variables";
+@import "node_modules/bootstrap/scss/bootstrap";
+@import "node_modules/bootswatch/dist/flatly/bootswatch";
+
+// Additional Styles
+@import "UI/assets/scss/theme";
