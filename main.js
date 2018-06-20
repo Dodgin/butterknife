@@ -1,4 +1,5 @@
 // Modules to control application life and create native browser window
+const electron = require('electron')
 const {app, BrowserWindow} = require('electron')
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -12,8 +13,16 @@ function createWindow () {
       height: 480,
       frame: false,
       resizable: false,
-      transparent: true
+      transparent: true,
+      alwaysOnTop: true
   })
+
+  // Bottom Right
+  let mainDisplay = electron.screen.getPrimaryDisplay()
+  mainWindow.setPosition(
+      mainDisplay.workAreaSize.width - 620,
+      mainDisplay.workAreaSize.height - 500
+  );
 
   // and load the index.html of the app.
   mainWindow.loadFile('index.html')

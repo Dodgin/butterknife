@@ -23,6 +23,7 @@ body {
     padding: 20px 15px;
 }
 
+.hidden {display: none;}
 
 .nav-tabs {
     &.main {
@@ -35,8 +36,13 @@ body {
         }
         &.disabled {
             color: transparent;
+            display: none;
         }
     }
+}
+
+.rel {
+    position: relative;
 }
 
 .main-navbar {
@@ -56,6 +62,36 @@ body {
     }
 }
 
+.full-height {
+    height: 100%;
+}
+.full-height-row-1 {
+    height: calc(100% - 52px);
+}
+.full-height-macro-actions {
+    height: calc(100% - 34px);
+}
+.full-height-macro-fieldset {
+    height: calc(100% + 11px);
+}
+.row {
+    &.pad-top {
+        padding-top:15px;
+    }
+    &.normal-pad {
+        margin-bottom: 10px;
+    }
+    &.bottom {
+        position: absolute;
+        bottom: 0;
+    }
+}
+.cut-pad-left {
+    padding-left: 5px;
+}
+.cut-pad-right {
+    padding-right: 5px;
+}
 .main-navbar-section-1 {
     position: absolute;
     top: 0;
@@ -66,14 +102,14 @@ body {
 .main-navbar-section-2 {
     position: absolute;
     top: 0;
-    left: 502px;
-    width: 216px;
+    left: 409px;
+    width: 109px;
     height: 68px;
 }
 .main-navbar-section-3 {
     position: absolute;
     top: 26px;
-    left: 718px;
+    left: 518px;
     width: 81px;
     height: 42px;
 }
@@ -120,4 +156,28 @@ body {
     position: absolute;
     bottom: 0;
     width: calc(100% - 30px);
+}
+
+// HTML element modifications
+select {
+    &.full-width {
+        width: 100%;
+    }
+}
+
+fieldset.scheduler-border {
+    border: 1px groove #ddd!important;
+    padding: 5px 5px 5px !important;
+    margin: -13px !important;
+    -webkit-box-shadow:  0px 0px 0px 0px #000;
+            box-shadow:  0px 0px 0px 0px #000;
+}
+
+legend.scheduler-border {
+    width:inherit; /* Or auto */
+    padding:0 10px; /* To give a bit of padding on the left and right */
+    border-bottom:none;
+    font-size: 1rem;
+    font-weight: bold !important;
+    text-align: left !important;
 }

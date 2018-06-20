@@ -4,78 +4,157 @@
     <meta charset="UTF-8">
     <title>Hello World!</title>
     <link rel="stylesheet" type="text/css" href="./UI/build/css/app.min.css">
-    <script src="./UI/build/js/app.min.js"></script>
   </head>
   <body>
 
-      <div class="window-controls">
-          <div class="control"><button class="close-window" onclick="window.close()">x</button></div>
-          <div class="control"><button class="minimize-window">-</button></div>
+    <script type="text/x-template" id="executable-finder-component">
+      <div class="rel">
+          <input type="file" class="custom-file-input" id="validatedCustomFile" @change="processFile($event)">
+          <label v-cloak class="custom-file-label" for="validatedCustomFile">{{value}}</label>
+          <div class="invalid-feedback">Example invalid custom file feedback</div>
       </div>
-      <div class="main-navbar">
-          <div class="title">ButterKnife - The Legends of Ultima Assistant</div>
-      </div>
-      <div class="main-navbar-section-1 ui-draggable"></div>
-      <div class="main-navbar-section-2 ui-draggable"></div>
-      <div class="main-navbar-section-3 ui-draggable"></div>
+    </script>
+    <script type="text/x-template" id="start-game-component">
+        <div class="start-button-cont">
+            <button class="btn btn-primary right" @click="startGame()">Start Game</button>
+        </div>
+    </script>
 
-      <ul class="nav nav-tabs main">
-        <li class="nav-item">
-          <a class="nav-link active show" data-toggle="tab" href="#start">Start Client</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" data-toggle="tab" href="#macros">Macros</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" data-toggle="tab" href="#agents">Agents</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link disabled dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Settings</a>
-          <div class="dropdown-menu">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <a class="dropdown-item" href="#">Something else here</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Separated link</a>
+      <!-- Main App Vue Binding -->
+      <div id="app" class="full-height">
+
+          <!-- Window Top Right Controls -->
+          <div class="window-controls">
+              <div class="control"><button class="close-window" onclick="window.close()">x</button></div>
+              <div class="control"><button class="minimize-window">-</button></div>
           </div>
-        </li>
-      </ul>
-      <div id="myTabContent" class="tab-content">
-          <div class="tab-pane fade active show" id="start">
-              <p>Welcome to ButterKnife! Please select where to launch Legends of Aria from:</p>
-              <div class="custom-file">
-                <input type="file" class="custom-file-input" id="validatedCustomFile">
-                <label class="custom-file-label" for="validatedCustomFile">C:\Program Files (x86)\Legends of Aria Beta\LegendsOfAria.exe</label>
-                <div class="invalid-feedback">Example invalid custom file feedback</div>
-              </div>
-              <div><br></div>
-              <div class="start-button-cont">
-                  <button class="btn btn-primary right">Start Game</button>
-              </div>
-              <div class="alert alert-warning shard-restriction-warning" role="alert">
-                  ButterKnife can <strong>ONLY</strong> be used with the Legends of Aria shard: <strong>Legends of Ultima</strong>. <br>
-                  <span style="text-decoration: underline">It will not work with any other shard</span>. If you are a shard administrator and would like it enabled for your shard, please contact butterknife@zaron.technology.
+
+          <!-- Window Title & Draggable Regions -->
+          <div class="main-navbar">
+              <div class="title">ButterKnife - The Legends of Ultima Assistant</div>
+          </div>
+          <div class="main-navbar-section-1 ui-draggable"></div>
+          <div class="main-navbar-section-2 ui-draggable"></div>
+          <div class="main-navbar-section-3 ui-draggable"></div>
+
+          <!-- Start Screen Navigation -->
+          <ul class="nav nav-tabs main" id="startTab" role="tablist" v-bind:class="{hidden: state == states_enum.STATE_CLIENTSTARTED}">
+            <li class="nav-item">
+              <a class="nav-link active show" data-toggle="tab" href="#start">Start Client</a>
+            </li>
+          </ul>
+          <!-- Start Screen Tabs -->
+          <div id="startTabContent" class="tab-content" v-bind:class="{hidden: state == states_enum.STATE_CLIENTSTARTED}">
+              <div class="tab-pane active show" id="start">
+                  <p>Welcome to ButterKnife! Please select where to launch Legends of Aria from:</p>
+                  <executable-finder-component v-model="serializable.loa_executable_system_path"></executable-finder-component>
+                  <div><br></div>
+                  <start-game-component></start-game-component>
+                  <div class="alert alert-warning shard-restriction-warning" role="alert">
+                      ButterKnife can <strong>ONLY</strong> be used with the Legends of Aria shard: <strong>Legends of Ultima</strong>. <br>
+                      <span style="text-decoration: underline">It will not work with any other shard</span>. If you are a shard administrator and would like it enabled for your shard, please contact <a href="mailto:butterknifedev@gmail.com" target="_blank">butterknifedev@gmail.com</a>.
+                  </div>
               </div>
           </div>
-        <div class="tab-pane fade" id="macros">
-          <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit.</p>
-        </div>
-        <div class="tab-pane fade" id="agents">
-          <p>Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craft beer, iphone skateboard locavore carles etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony. Leggings gentrify squid 8-bit cred pitchfork.</p>
-        </div>
-        <div class="tab-pane fade" id="dropdown2">
-          <p>Trust fund seitan letterpress, keytar raw denim keffiyeh etsy art party before they sold out master cleanse gluten-free squid scenester freegan cosby sweater. Fanny pack portland seitan DIY, art party locavore wolf cliche high life echo park Austin. Cred vinyl keffiyeh DIY salvia PBR, banh mi before they sold out farm-to-table VHS viral locavore cosby sweater.</p>
-        </div>
+
+          <!-- Main App Navigation -->
+          <ul class="nav nav-tabs main" id="myTab" role="tablist" v-bind:class="{hidden: state == states_enum.STATE_CLIENTNOTSTARTED}">
+            <li class="nav-item">
+              <a class="nav-link active show" id="macros-tab" role="tab" data-toggle="tab" href="#macros">Macros</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#agents">Agents</a>
+            </li>
+            <!--
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" v-bind:class="{disabled: state == states_enum.STATE_CLIENTNOTSTARTED}" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Settings</a>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <a class="dropdown-item" href="#">Something else here</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Separated link</a>
+              </div>
+            </li>
+            -->
+          </ul>
+          <!-- App Content Areas for each Tab -->
+          <div id="myTabContent" class="tab-content" v-bind:class="{hidden: state == states_enum.STATE_CLIENTNOTSTARTED}">
+            <div class="tab-pane active show full-height" id="macros" role="tabpanel" aria-labelledby="macros-tab">
+                <div class="row full-height">
+                    <div class="col-4 full-height">
+                        <div class="row full-height-row-1">
+                            <div class="col-sm full-height">
+                                <select size="6" class="full-width full-height">
+                                    <option>Macro 1</option>
+                                    <option>Macro 2</option>
+                                    <option>Macro 3</option>
+                                    <option>Macro 4</option>
+                                    <option>Macro 5</option>
+                                    <option>Macro 6</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row pad-top">
+                            <div class="col-6 cut-pad-right">
+                                <button class="btn btn-primary btn-block">New...</button>
+                            </div>
+                            <div class="col-6 cut-pad-left">
+                                <button class="btn btn-primary btn-block">Remove</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 full-height">
+                        <fieldset class="scheduler-border full-height-macro-fieldset">
+                            <legend class="scheduler-border">Actions</legend>
+                            <div class="control-group full-height-macro-actions">
+                                <select size="6" class="full-width full-height">
+                                    <option>Exec: Fart on face</option>
+                                    <option>Absolute Target</option>
+                                    <option>Pause 2.50sec</option>
+                                    <option>Double Click (Bandage 0xFF2)</option>
+                                    <option>Pause 1.00sec</option>
+                                    <option>Cast Barf</option>
+                                </select>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="col-2 full-height">
+                        <div class="row normal-pad">
+                            <div class="col-sm">
+                                <button class="btn btn-primary btn-block">Play</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm">
+                                <button class="btn btn-primary btn-block">Record</button>
+                            </div>
+                        </div>
+                        <div class="row bottom">
+                            <div class="col-sm">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <label class="form-check-label" for="defaultCheck1">
+                                        Loop
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="agents">
+              <p>Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craft beer, iphone skateboard locavore carles etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony. Leggings gentrify squid 8-bit cred pitchfork.</p>
+            </div>
+          </div>
       </div>
 
-    <!-- All of the Node.js APIs are available in this renderer process. -->
-    We are using Node.js <script>document.write(process.versions.node)</script>,
-    Chromium <script>document.write(process.versions.chrome)</script>,
-    and Electron <script>document.write(process.versions.electron)</script>.
-
+      <script src="./UI/build/js/app.min.js"></script>
     <script>
       // You can also require other files to run in this process
       require('./renderer.js')
     </script>
+
+
   </body>
 </html>

@@ -12,10 +12,14 @@ var cleanCSS = require('gulp-clean-css');
 
 var paths = {
   scripts: [
-      'UI/assets/js/**/*.js',
       'node_modules/jquery/dist/jquery.min.js',
       'node_modules/popper.js/dist/umd/popper.min.js',
-      'node_modules/bootstrap/dist/js/bootstrap.min.js'
+      'UI/assets/js/bootstraps_bootstraps.js',
+      'node_modules/bootstrap/dist/js/bootstrap.min.js',
+      'node_modules/vue/dist/vue.min.js',
+      'UI/assets/js/bootstraps_vuestraps.js',
+      'UI/assets/js/vue/components/**/*.js',
+      'UI/assets/js/vue/app.js'
   ],
   scss: ['UI/assets/scss/**/*.scss']
 };
