@@ -9,17 +9,19 @@ var sourcemaps = require('gulp-sourcemaps');
 var del = require('del');
 var scss = require('gulp-sass');
 var cleanCSS = require('gulp-clean-css');
+var merge = require('merge-stream');
+var gulpif = require('gulp-if');
 
 var paths = {
   scripts: [
       'node_modules/jquery/dist/jquery.min.js',
       'node_modules/popper.js/dist/umd/popper.min.js',
-      'UI/assets/js/bootstraps_bootstraps.js',
       'node_modules/bootstrap/dist/js/bootstrap.min.js',
       'node_modules/vue/dist/vue.min.js',
-      'UI/assets/js/bootstraps_vuestraps.js',
-      'UI/assets/js/vue/components/**/*.js',
-      'UI/assets/js/vue/app.js'
+      'node_modules/vue-context-menu/vue-context-menu.js',
+      'node_modules/angular/angular.min.js',
+      'UI/assets/js/bootstraps_bootstraps.js',
+      'UI/assets/js/angular/**/*.js',
   ],
   scss: ['UI/assets/scss/**/*.scss']
 };
@@ -44,14 +46,12 @@ gulp.task('scss', ['clean'], function() {
 
 // JS
 gulp.task('scripts', ['clean'], function() {
-  // Minify and copy all JavaScript (except vendor scripts)
-  // with sourcemaps all the way down
-  return gulp.src(paths.scripts)
-    .pipe(sourcemaps.init())
-      //.pipe(uglify())
+    return gulp.src(paths.scripts)
+      .pipe(sourcemaps.init())
+      .pipe(gulpif('!**/*.min.js', uglify({mangle: true})))
       .pipe(concat('app.min.js'))
-    .pipe(sourcemaps.write())
-    .pipe(gulp.dest('UI/build/js'));
+      .pipe(sourcemaps.write())
+      .pipe(gulp.dest('UI/build/js'));
 });
 
 // Rerun the task when a file changes

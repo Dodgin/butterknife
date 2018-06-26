@@ -7,18 +7,41 @@
   </head>
   <body>
 
-    <script type="text/x-template" id="executable-finder-component">
-      <div class="rel">
-          <input type="file" class="custom-file-input" id="validatedCustomFile" @change="processFile($event)">
-          <label v-cloak class="custom-file-label" for="validatedCustomFile">{{value}}</label>
-          <div class="invalid-feedback">Example invalid custom file feedback</div>
-      </div>
-    </script>
-    <script type="text/x-template" id="start-game-component">
-        <div class="start-button-cont">
-            <button class="btn btn-primary right" @click="startGame()">Start Game</button>
-        </div>
-    </script>
+      <!--
+        * Component Templates
+        -->
+
+        <!-- Executable Finder -->
+        <script type="text/x-template" id="executable-finder-component">
+            <div class="rel">
+                <input type="file" class="custom-file-input" id="validatedCustomFile" @change="processFile($event)">
+                <label v-cloak class="custom-file-label" for="validatedCustomFile">{{value}}</label>
+                <div class="invalid-feedback">Example invalid custom file feedback</div>
+            </div>
+        </script>
+
+        <!-- Start Game Button -->
+        <script type="text/x-template" id="start-game-component">
+            <div class="start-button-cont">
+                <button class="btn btn-primary right" @click="startGame()">Start Game</button>
+            </div>
+        </script>
+
+        <!-- Right-click Context Menu -->
+        <script type="text/x-template" id="context-menu-component">
+            <div class="context-menu">
+            </div>
+        </script>
+
+        <!-- Modal -->
+        <script type="text/x-template" id="modal-component">
+            <div class="modal">
+            </div>
+        </script>
+
+      <!--
+        * End Component Templates
+        -->
 
       <!-- Main App Vue Binding -->
       <div id="app" class="full-height">
